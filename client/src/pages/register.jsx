@@ -42,22 +42,54 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+  <div className="min-h-screen flex items-center justify-center cosmic-bg py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+<style jsx global>{`
+  .cosmic-bg {
+    position: relative;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkle 2s infinite ease-in-out;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.2; }
+  }
+`}</style>
+{Array.from({ length: 60 }).map((_, i) => (
+  <div
+    key={i}
+    className="star"
+    style={{
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 2}s`,
+    }}
+  />
+))}
+      <div className="max-w-lg w-full space-y-10">
         <div className="text-center">
-          <div className="mx-auto w-16 h-16 bg-primary rounded-xl flex items-center justify-center mb-6">
-            <i className="fas fa-user-plus text-white text-2xl"></i>
+          <div className="mx-auto w-20 h-20 bg-primary rounded-xl flex items-center justify-center mb-8">
+            <i className="fas fa-user-plus text-white text-4xl"></i>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900">Manager Registration</h2>
-          <p className="mt-2 text-sm text-gray-600">Only managers can register an account</p>
+          <h2 className="text-4xl font-extrabold text-white drop-shadow-md">Manager Registration</h2>
+          <p className="mt-4 text-lg text-gray-200 font-medium drop-shadow">Only managers can register an account</p>
         </div>
-        <Card>
+        <Card className="bg-black/70 backdrop-blur-md border-none shadow-2xl">
           <CardHeader>
-            <CardTitle>Sign Up</CardTitle>
-            <CardDescription>Fill in the details to register as a manager</CardDescription>
+            <CardTitle className="text-2xl text-white font-bold">Sign Up</CardTitle>
+            <CardDescription className="text-base text-gray-200 font-medium">Fill in the details to register as a manager</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-8">
               {error && (
                 <Alert variant="destructive">
                   <AlertDescription>{error}</AlertDescription>
@@ -68,33 +100,33 @@ export default function Register() {
                   <AlertDescription>{success}</AlertDescription>
                 </Alert>
               )}
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div>
-                  <Label htmlFor="username">Username</Label>
-                  <Input id="username" type="text" value={form.username} onChange={handleChange("username")} required className="mt-1" />
+                  <Label htmlFor="username" className="text-lg text-white font-semibold">Username</Label>
+                  <Input id="username" type="text" value={form.username} onChange={handleChange("username")} required className="mt-2 text-lg px-5 py-4 placeholder-gray-400 text-white bg-black/40 border-gray-500 focus:bg-black/60" />
                 </div>
                 <div>
-                  <Label htmlFor="password">Password</Label>
-                  <Input id="password" type="password" value={form.password} onChange={handleChange("password")} required className="mt-1" />
+                  <Label htmlFor="password" className="text-lg text-white font-semibold">Password</Label>
+                  <Input id="password" type="password" value={form.password} onChange={handleChange("password")} required className="mt-2 text-lg px-5 py-4 placeholder-gray-400 text-white bg-black/40 border-gray-500 focus:bg-black/60" />
                 </div>
                 <div>
-                  <Label htmlFor="fullName">Full Name</Label>
-                  <Input id="fullName" type="text" value={form.fullName} onChange={handleChange("fullName")} required className="mt-1" />
+                  <Label htmlFor="fullName" className="text-lg text-white font-semibold">Full Name</Label>
+                  <Input id="fullName" type="text" value={form.fullName} onChange={handleChange("fullName")} required className="mt-2 text-lg px-5 py-4 placeholder-gray-400 text-white bg-black/40 border-gray-500 focus:bg-black/60" />
                 </div>
                 <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" value={form.email} onChange={handleChange("email")} required className="mt-1" />
+                  <Label htmlFor="email" className="text-lg text-white font-semibold">Email</Label>
+                  <Input id="email" type="email" value={form.email} onChange={handleChange("email")} required className="mt-2 text-lg px-5 py-4 placeholder-gray-400 text-white bg-black/40 border-gray-500 focus:bg-black/60" />
                 </div>
                 <div>
-                  <Label htmlFor="managerCode">Manager Code</Label>
-                  <Input id="managerCode" type="text" value={form.managerCode} onChange={handleChange("managerCode")} required className="mt-1" />
-                  <p className="text-xs text-gray-500 mt-1">A valid manager code is required to register.</p>
+                  <Label htmlFor="managerCode" className="text-lg text-white font-semibold">Manager Code</Label>
+                  <Input id="managerCode" type="text" value={form.managerCode} onChange={handleChange("managerCode")} required className="mt-2 text-lg px-5 py-4 placeholder-gray-400 text-white bg-black/40 border-gray-500 focus:bg-black/60" />
+                  <p className="text-base text-gray-300 mt-2">A valid manager code is required to register.</p>
                 </div>
               </div>
-              <Button type="submit" className="w-full" disabled={isPending}>
+              <Button type="submit" className="w-full text-lg py-3 bg-primary text-white font-bold hover:bg-primary/90" disabled={isPending}>
                 {isPending ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
                     Signing up...
                   </>
                 ) : (
@@ -105,13 +137,13 @@ export default function Register() {
                 )}
               </Button>
             </form>
-            <div className="mt-6 text-center">
-              <Button variant="link" type="button" onClick={() => setLocation("/login")}>Already have an account? Login</Button>
+            <div className="mt-8 text-center">
+              <Button variant="link" type="button" className="text-lg text-primary font-bold" onClick={() => setLocation("/login")}>Already have an account? Login</Button>
             </div>
           </CardContent>
         </Card>
-        <div className="text-center">
-          <p className="text-xs text-gray-500">Arnifi Face Recognition Attendance System</p>
+        <div className="text-center mt-8">
+          <p className="text-base text-gray-200 font-medium">Arnifi Face Recognition Attendance System</p>
         </div>
       </div>
     </div>
